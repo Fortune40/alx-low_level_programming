@@ -14,7 +14,7 @@ for (i = 0; i <= 999; i++)
 j = i / 100;
 k = (i / 10) % 10;
 l = i % 10;
-if (j < k && k < i)
+if (j < k && k < l)
 {
 putchar(j + '0');
 putchar(k + '0');
