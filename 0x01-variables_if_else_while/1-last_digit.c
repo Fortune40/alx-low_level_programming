@@ -5,7 +5,7 @@
 /**
  *main -> assigns random number
  *and prints the last digit
- *Return : Always 0 (success)
+ *Return: Always 0 (success)
  */
 int main(void)
 {
