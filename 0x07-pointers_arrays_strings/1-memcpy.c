@@ -9,8 +9,8 @@
 
 char *_memcpy(char *dest, char *src, unsigned int n)
 {
-unsigned int i;
-for (i = 0; i < n; 1++)
-*(dest + i) = *(scr + i);
+unsigned int a;
+for (a = 0; a < n; a++)
+dest[a] = scr[a];
 return (dest);
 }
