@@ -1,4 +1,4 @@
-#include <studio>
+#include <studio.h>
 /**
  * main - prints all arguments
  * @argc: number of arguments
