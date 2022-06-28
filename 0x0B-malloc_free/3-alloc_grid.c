@@ -1,9 +1,10 @@
 #include "main.h"
 #include <stdlib.h>
 /**
- * alloc_grind - returns pointer to 2 dimenstional array integers
+ * alloc_grid - returns pointer to 2 dimenstional array integers
  * @width: width of array
  * @height: height of array
+ * Return: pointer to array of int
  */
 
 int **alloc_grid(int width, int height)
