@@ -1,6 +1,6 @@
 #include "main.h"
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 /**
@@ -29,5 +29,9 @@ return (NULL);
 }
 newp = malloc(new_size);
 if (newp == NULL)
+return (NULL);
+for (i = 0; i < old_size && i < new_size; i++)/*check i bound to sizes*/
+newp[i] = oldptr[i];
+free(ptr);
 return (newp);
 }
