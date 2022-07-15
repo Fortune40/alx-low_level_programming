@@ -1,29 +1,23 @@
 #include "lists.h"
 
 /**
- * print_list - print all the elements of a list_t list
- * @h: the list_t list
+ * print_list - print all elements of list_t list
+ * @h: list_t list
  * Return: Always 0 (Success)
  */
 size_t print_list(const list_t *h)
 {
-size_t a;
-list_t *list;
+size_t nelem;
 
-list = (list_t *)h;
-
-for (a = 0; list != NULL; a++)
+nelem = 0;
+while (h != NULL)
 {
-if (list->str == NULL)
-{
-printf("[0] (nil)\n");
-}
+if (h->str == NULL)
+printf("[%d] %s\n", 0, "(nil)");
 else
-{
-printf("[%i] %s\n", list->len, list->str);
+printf("[%d] %s\n", h->len, h->str);
+h = h->next;
+nelem++;
 }
-
-list = list->next;
-}
-return (a);
+return (nelem);
 }
