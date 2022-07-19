@@ -51,7 +51,7 @@ free_listp(&hptr);
 return (nnodes);
 }
 }
-printf("[%p] %d\n", (void *)head, head->n);
+printf("->[%p] %d\n", (void *)head, head->n);
 head = head->next;
 nnodes++;
 }
