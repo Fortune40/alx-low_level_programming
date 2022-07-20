@@ -1,24 +1,51 @@
 #include "lists.h"
 
 /**
- * free_listp - frees linked list
- * @head: head of list.
+ * looped_listint_len - Counts number of unique nodes in looped linked list
+ * @head: head of list
+ * Return: If the list is not looped - 0
+ * Otherwise - the number of unique nodes in the list. 
  */
-void free_listp(listp_t **head)
+size_t looped_listint_len(const listint_t *head)
 {
-listp_t *temp;
-listp_t *curr;
-if (head != NULL)
+const listint_t *tortoise, *hare;
+size_t nodes = 1;
+
+if (head == NULL || head->next == NULL)
+return (0);
+
+tortoise = head->next;
+hare = (head->next)->next;
+
+while (hare)
 {
-curr = *head;
-while ((temp = curr) != NULL)
+if (tortoise == hare)
 {
-curr = curr->next;
-free(temp);
+tortoise = head;
+while (tortoise != hare)
+{
+nodes++;
+tortoise = tortoise->next;
+hare = hare->next;
 }
-*head = NULL;
+
+tortoise = tortoise->next;
+while (tortoise != hare)
+{
+nodes++;
+tortoise = tortoise->next;
 }
+
+return (nodes);
 }
+
+tortoise = tortoise->next;
+hare = (hare->next)->next;
+}
+
+return (0);
+}
+
 
 /**
  * print_listint_safe - prints linked list.
@@ -27,35 +54,29 @@ free(temp);
  */
 size_t print_listint_safe(const listint_t *head)
 {
-size_t nnodes = 0;
-listp_t *hptr, *new, *add;
-hptr = NULL;
-while (head != NULL)
-{
-new = malloc(sizeof(listp_t));
-if (new == NULL)
-exit(98);
+size_t nodes, index = 0;
 
-new->p = (void *)head;
-new->next = hptr;
-hptr = new;
-add = hptr;
+nodes = looped_listint_len(head);
 
-while (add->next != NULL)
+if (nodes == 0)
 {
-add = add->next;
-if (head == add->p)
+for (; head != NULL; nodes++)
 {
-printf("-> [%p] %d\n", (void *)head, head->n);
-free_listp(&hptr);
-return (nnodes);
-}
-}
-printf("->[%p] %d\n", (void *)head, head->n);
+printf("[%p] %d\n", (void *)head, head->n);
 head = head->next;
-nnodes++;
+}
 }
 
-free_listp(&hptr);
-return (nnodes);
+else
+{
+for (index = 0; index < nodes; index++)
+{
+printf("[%p] %d\n", (void *)head, head->n);
+head = head->next;
+}
+
+printf("-> [%p] %d\n", (void *)head, head->n);
+}
+
+return (nodes);
 }
