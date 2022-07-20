@@ -4,7 +4,7 @@
  * looped_listint_len - Counts number of unique nodes in looped linked list
  * @head: head of list
  * Return: If the list is not looped - 0
- * Otherwise - the number of unique nodes in the list. 
+ * Otherwise - the number of unique nodes in the list.
  */
 size_t looped_listint_len(const listint_t *head)
 {
