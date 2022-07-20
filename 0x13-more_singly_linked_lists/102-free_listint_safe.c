@@ -1,25 +1,47 @@
 #include "lists.h"
 
-/**
- * free_listp2 - frees a linked list
- * @head: head of a list.
+/** 
+ * looped_listint_count - Counts number of unique nodes in looped list
+ * @head: A pointer to the head of listint_t to check
+ * Return: If the list is not looped - 0.
+ * Otherwise - the number of unique nodes in the list.
  */
-void free_listp2(listp_t **head)
+size_t looped_listint_count(listint_t *head)
 {
-listp_t *temp;
-listp_t *curr;
+listint_t *tortoise, *hare;
+size_t nodes = 1;
 
-if (head != NULL)
+if (head == NULL || head->next == NULL)
+return (0);
+
+tortoise = head->next;
+hare = (head->next)->next;
+
+while (hare)
 {
-curr = *head;
-while ((temp = curr) != NULL)
+if (tortoise == hare)
 {
-curr = curr->next;
-free(temp);
+tortoise = head;
+while (tortoise != hare)
+{
+nodes++;
+tortoise = tortoise->next;
+hare = hare->next;
 }
-*head = NULL;
+tortoise = tortoise->next;
+while (tortoise != hare)
+{
+nodes++;
+tortoise = tortoise->next;
 }
+return (nodes);
 }
+tortoise = tortoise->next;
+hare = (hare->next)->next;
+}
+return (0);
+}
+
 
 /**
  * free_listint_safe - frees a linked list.
@@ -28,39 +50,31 @@ free(temp);
  */
 size_t free_listint_safe(listint_t **h)
 {
-size_t nnodes = 0;
-listp_t *hptr, *new, *add;
-listint_t *curr;
+listint_t *tmp;
+size_t nodes, index;
 
-hptr = NULL;
-while (*h != NULL)
+nodes = looped_listint_count(*h);
+if (nodes == 0)
 {
-new = malloc(sizeof(listp_t));
-if (new == NULL)
-exit(98);
+for (; h != NULL && *h != NULL; nodes++)
+{
+tmp = (*h)->next;
+free(*h);
+*h = tmp;
+}
+}
 
-new->p = (void *)*h;
-new->next = hptr;
-hptr = new;
-add = hptr;
-
-while (add->next != NULL)
+else
 {
-add = add->next;
-if (*h == add->p)
+for (index = 0; index < nodes; index++)
 {
+tmp = (*h)->next;
+free(*h);
+*h = tmp;
+}
 *h = NULL;
-free_listp2(&hptr);
-return (nnodes);
 }
-}
-curr = *h;
-*h = (*h)->next;
-free(curr);
-nnodes++;
-}
+h = NULL;
 
-*h = NULL;
-free_listp2(&hptr);
-return (nnodes);
+return (nodes);
 }
